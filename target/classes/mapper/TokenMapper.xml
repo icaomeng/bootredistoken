@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cm.mapper.TokenMapper" >
+
+    <insert id="saveToken" parameterType="com.cm.entity.Token">
+        insert into token(uuid,token,create_time)
+        VALUES(#{uuid},#{token},#{createTime})
+    </insert>
+
+    <select id="getUserId" resultType="int">
+        select count(1) from token where token like '%'||#{userId}
+    </select>
+
+    <update id="updateByUserId">
+        update token set create_time=#{createTime} where token like '%'||#{userId}
+    </update>
+
+    <select id="selectToken" resultType="com.cm.entity.Token">
+        select *  from token
+    </select>
+
+    <select id="listUserRedis" resultType="com.cm.entity.User">
+        select * from user where 1=1
+        <if test="uuid != null and uuid != ''">
+            and uuid=#{uuid}
+        </if>
+    </select>
+
+    <delete id="deleteByUuid">
+        delete from token where uuid=#{uuid}
+    </delete>
+
+    <select id="getType" resultType="int">
+        select count(1) from token where uuid=#{uuid} and token=#{token}
+    </select>
+
+
+    <select id="login" resultType="com.cm.entity.JsUser">
+       select * from jc_user where user_name=#{username} and password=#{password}
+    </select>
+
+    <select id="getJsUser" resultType="com.cm.entity.JsUser">
+        select * from jc_user where uuid=#{uuid}
+    </select>
+
+</mapper>

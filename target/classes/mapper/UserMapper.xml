@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cm.mapper.UserMapper" >
+
+    <insert id="insertUser" parameterType="com.cm.entity.User">
+        insert into user(uuid,user_name,user_age,user_sex,city)
+        VALUES(#{uuid},#{userName},#{userAge},#{userSex},#{city})
+    </insert>
+
+    <select id="listUser" resultType="com.cm.entity.User">
+        select * from user where 1=1
+    </select>
+
+    <select id="listUserRedis" resultType="com.cm.entity.User">
+        select * from user where 1=1
+        <if test="uuid != null and uuid != ''">
+            and uuid=#{uuid}
+        </if>
+    </select>
+
+    <delete id="deleteUser">
+        delete from user where uuid=#{uuid}
+    </delete>
+
+    <update id="updateUser">
+        update user set user_name=#{userName},user_age=#{userAge},user_sex=#{userSex},city=#{city} where uuid=#{uuid}
+    </update>
+
+    <select id="login" resultType="com.cm.entity.JsUser">
+       select * from jc_user where user_name=#{username} and password=#{password}
+    </select>
+
+    <select id="getJsUser" resultType="com.cm.entity.JsUser">
+        select * from jc_user where uuid=#{uuid}
+    </select>
+
+</mapper>
